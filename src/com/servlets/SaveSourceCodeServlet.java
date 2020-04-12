@@ -14,9 +14,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.user.User;
 
-/**
- * Servlet implementation class SaveSourceCodeServlet
- */
 @WebServlet("/SaveSourceCodeServlet")
 public class SaveSourceCodeServlet extends HttpServlet {
 	private User user = User.getInstance();
@@ -35,24 +32,13 @@ public class SaveSourceCodeServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * Default constructor. 
-     */
-    public SaveSourceCodeServlet() {
-        // TODO Auto-generated constructor stub
-    }
+    public SaveSourceCodeServlet() {}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
@@ -121,6 +107,7 @@ public class SaveSourceCodeServlet extends HttpServlet {
 	               }
 	               fi.write( file ) ;
 	               out.println("Uploaded Filename: " + fileName + "<br>");
+	               System.out.println(fileName);
 	            }
 	         }
 	         out.println("</body>");

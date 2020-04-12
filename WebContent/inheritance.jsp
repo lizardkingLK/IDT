@@ -4,6 +4,8 @@
 <%@ page import="java.io.FileNotFoundException" %>
 <%@ page import="java.util.Scanner" %>
 <%@ page import="com.user.*" %>
+<%@ page import="com.inheritance.Inheritance" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -69,8 +71,8 @@
 			<tr>
 			  <th scope="col">Line No</th>
 			  <th scope="col">Class Name</th>
-			  <th scope="col">No of direct inheritnce</th>
-			  <th scope="col">No of indirect inheritnce</th>
+			  <th scope="col">No of direct inheritance</th>
+			  <th scope="col">No of indirect inheritance</th>
 			  <th scope="col">Total inheritance</th>
 			  <th scope="col">Ci</th>
 			</tr>
@@ -88,8 +90,14 @@
 					      Scanner myReader = new Scanner(myObj);
 					      while (myReader.hasNextLine()) {
 					        String data = myReader.nextLine();
-					        out.print("<tr><th scope="+row+">"+(++count)+"</th><td>"+data+"</td></tr>");			  
-					        //out.print("<br />");
+					        int DI = Inheritance.getDI(data);
+					        int II = 1;
+					        out.print("<tr>");
+				        	out.print("<th scope="+row+">"+(++count)+"</th><td>"+data+"</td>"); // LINE
+				        	out.print("<th scope="+row+">"+DI+"</th>"); // DI
+				        	out.print("<th scope="+row+">"+II+"</th>"); // II
+				        	out.print("<th scope="+row+">"+(DI+II)+"</th>"); // TI
+				        	out.print("</tr>");
 					      }
 					      myReader.close();
 				    } catch (FileNotFoundException e) {

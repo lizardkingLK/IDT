@@ -89,6 +89,7 @@
 				        	out.print("<th scope="+row+">"+(++count)+"</th><td>"+data+"</td>"); // LINE			  
 					        out.print("<th scope="+row+">"+Size.getNKW(data)+"</th>"); // NKW
 					        out.print("<th scope="+row+">"+Size.getNID(data)+"</th>"); // NID
+					        out.print("<th scope="+row+">"+Size.getNOP(data)+"</th>"); // NOP
 					        out.print("</tr>");
 					        
 					      }
