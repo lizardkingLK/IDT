@@ -4,6 +4,8 @@
 <%@ page import="java.io.FileNotFoundException" %>
 <%@ page import="java.util.Scanner" %>
 <%@ page import="com.user.*" %>
+<%@ page import="com.controlstructure.ControlStructure" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,7 +13,7 @@
 <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>controlstructuer</title>
+    <title>Control Structures</title>
   </head>
   <body>
     
@@ -28,29 +30,27 @@
 		
 		<div class="my-2 my-lg-0">
 		  <ul class="navbar-nav mr-auto">
-			  <li class="nav-item active">
+			  <li class="nav-item">
 				<a class="nav-link" href="size.jsp">Size</a>
 			  </li>
-			  <li class="nav-item active">
+			  <li class="nav-item">
 				<a class="nav-link" href="variables.jsp">Variables</a>
 			  </li>
-			  <li class="nav-item active">
+			  <li class="nav-item">
 				<a class="nav-link" href="methods.jsp">Methods</a>
 			  </li>
-			  <li class="nav-item active">
+			  <li class="nav-item">
 				<a class="nav-link" href="inheritance.jsp">Inheritance</a>
 			  </li>
-			  <li class="nav-item active">
+			  <li class="nav-item">
 				<a class="nav-link" href="coupling.jsp">Coupling</a>
 			  </li>
 			  <li class="nav-item active">
-				<a class="nav-link" href="#">Control structures</a>
-			  </li>
-			  <li class="nav-item active">
-				<a class="nav-link" href="allfactors.jsp">All Factors</a>
-			  </li>
+				<a class="nav-link" href="controlstructures.jsp">Control structures</a>
 			  </li>
 			  <li class="nav-item">
+				<a class="nav-link" href="allfactors.jsp">All Factors</a>
+			  </li>
 			</ul>
 		</div>
 	  </div>
@@ -82,8 +82,11 @@
 					      Scanner myReader = new Scanner(myObj);
 					      while (myReader.hasNextLine()) {
 					        String data = myReader.nextLine();
-					        out.print("<tr><th scope="+row+">"+(++count)+"</th><td>"+data+"</td></tr>");			  
-					        //out.print("<br />");
+					        int WTCS = ControlStructure.getWTCS(data);
+					        out.print("<tr>");
+				        	out.print("<th scope="+row+">"+(++count)+"</th><td>"+data+"</td>"); // LINE
+				        	out.print("<th scope="+row+">"+WTCS+"</th>"); // WTCS
+					        out.print("</tr>");
 					      }
 					      myReader.close();
 				    } catch (FileNotFoundException e) {

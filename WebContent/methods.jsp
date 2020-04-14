@@ -28,29 +28,27 @@
 		
 		<div class="my-2 my-lg-0">
 		  <ul class="navbar-nav mr-auto">
-			  <li class="nav-item active">
+			  <li class="nav-item">
 				<a class="nav-link" href="size.jsp">Size</a>
 			  </li>
-			  <li class="nav-item active">
+			  <li class="nav-item">
 				<a class="nav-link" href="variables.jsp">Variables</a>
 			  </li>
 			  <li class="nav-item active">
-				<a class="nav-link" href="#">Methods</a>
-			  </li>
-			  <li class="nav-item active">
-				<a class="nav-link" href="inheritance.jsp">Inheritance</a>
-			  </li>
-			  <li class="nav-item active">
-				<a class="nav-link" href="coupling.jsp">Coupling</a>
-			  </li>
-			  <li class="nav-item active">
-				<a class="nav-link" href="controlstructures.jsp">Control structures</a>
-			  </li>
-			  <li class="nav-item active">
-				<a class="nav-link" href="allfactors.jsp">All Factors</a>
-			  </li>
+				<a class="nav-link" href="methods.jsp">Methods</a>
 			  </li>
 			  <li class="nav-item">
+				<a class="nav-link" href="inheritance.jsp">Inheritance</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="coupling.jsp">Coupling</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="controlstructures.jsp">Control structures</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="allfactors.jsp">All Factors</a>
+			  </li>
 			</ul>
 		</div>
 	  </div>
