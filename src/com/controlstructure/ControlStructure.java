@@ -14,9 +14,35 @@ public class ControlStructure {
 		return cleanLine;
 	}
 	
+	public static String getRidOfQuotes(String line) {
+		String newLine = line;
+		String newa = "";
+		
+		try {
+			int flag = 0;
+			for(int i=0;i<newLine.length();i++) {
+				
+				if((newLine.charAt(i)+"").matches("[\"]")) {
+					++flag;
+				}
+				
+				if(flag%2 == 0)
+					newa += newLine.charAt(i);
+			}
+		} catch(Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		
+		String newestLine = newa.replaceAll("[\"]", "").trim();
+		
+		return newestLine;
+	}
+	
 	public static int getWTCS(String line) {
 		int count = 0;
-		String newLine = getCleanLine(line);
+		String cleanLine = getCleanLine(line);
+		String newLine = getRidOfQuotes(cleanLine);
 		
 //		System.out.println(newLine);
 		
@@ -57,7 +83,7 @@ public class ControlStructure {
 	}
 	
 	public static void main(String[] args) {
-		int wtcsA = getWTCS("if( { // this is some bs inside A");
+		int wtcsA = getWTCS("if( String a = \"if(\"; { // this is some bs inside A");
 		System.out.println(wtcsA);
 		
 		int wtcsB = getWTCS(" }if( { // this is some bs inside B");

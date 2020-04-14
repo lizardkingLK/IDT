@@ -3,43 +3,35 @@ package com.controlstructure;
 public class Test {
 
 	public static String getRidOfQuotes(String line) {
-		int start = 0;
-		int end = 0;
-		
+		String newLine = line;
 		String newa = "";
 		
 		try {
-			for(int i=0;i<line.length();i++) {
-				int flag = 0;
+			int flag = 0;
+			for(int i=0;i<newLine.length();i++) {
 				
-				if((line.charAt(i)+"").matches("[\"]") || flag == 1) {
-					flag++;
-//					if(flag)
+				if((newLine.charAt(i)+"").matches("[\"]")) {
+					++flag;
 				}
+				
+				if(flag%2 == 0)
+					newa += newLine.charAt(i);
 			}
 		} catch(Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
 		}
 		
-//		System.out.println(line);
-//		System.out.println(start+","+end);
+		String newestLine = newa.replaceAll("[\"]", "").trim();
 		
-//		String a = line.substring(start+1,end);
-//		System.out.println(line.subSequence(start+1, end));
-		
-//		return (String) line.subSequence(start+1, end);
-//		return getRidOfQuotes(a);
-		return "";
+		return newestLine;
 	}
 	
 	public static void main(String[] args) {
 		
-		String Sa = "\"asdf\" "+12312+"\"sadfdsa\"";
-//		System.out.println(Sa);
-		
+		String Sa = "\"asdf\" "+12312+"\"sadfdsa\" twertere";
 		String Sb = getRidOfQuotes(Sa);
-//		System.out.println(Sb);
+		System.out.println(Sb);
 	}
 
 }
