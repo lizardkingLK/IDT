@@ -79,7 +79,8 @@ public class Inheritance {
 			}
 		} else if(isOutside && newLine.trim().equals("")) {
 			return 0;
-		}
+		} else 
+			return 0; 
 		
 		counts.add(count);
 		System.out.println("Value of counts : "+counts);

@@ -37,7 +37,7 @@ public class Size {
 		String replacement = "\"\"";
 		String newLineA = CleanLine.getCleanLineForKeywords(line);
 		String newLineB = CleanLine.getRidOfQuotes(newLineA);
-		String x = newLineB.replaceAll(regex, replacement).replaceAll("[()\\.]", " ");
+		String x = newLineB.replaceAll(regex, replacement).replaceAll("[()\\.][;]", " ");
 		
 		List<String> myArr = new ArrayList<>();
 		myArr.addAll(Arrays.asList(x.trim().split(" ")));
@@ -100,5 +100,46 @@ public class Size {
 		}
 		
 		return count;
+	}
+	
+	public static int getNNV(String line) {
+		int count = 0;
+		String newLineA = CleanLine.getCleanLineForKeywords(line);
+		String newLineB = CleanLine.getRidOfQuotes(newLineA);
+		String regNumeric = "[+-]?([0-9]*[.])?[0-9]+";
+		
+		List<String> myArr = new ArrayList<>();
+		myArr.addAll(Arrays.asList(newLineB.replaceAll("[[()],;\"]", " ").replaceAll("[a-zA-Z*][;]", " ").trim().split(" ")));
+		System.out.println(myArr);
+		for (String y : myArr) {
+			if(y.matches(regNumeric)) {
+				System.out.println(y);
+				count++;
+			}
+		}
+		
+		return count;
+	}
+	
+	public static int getNSL(String line) {
+		int count = 0;
+		
+		String newLineA = CleanLine.getCleanLineForKeywords(line);
+		String newLine = newLineA;
+		
+		for(int i=0;i<newLine.length();i++) {
+			if((newLine.charAt(i)+"").matches("[\"]"))
+				++count;
+		}
+		
+		return count/2;
+	}
+	
+	public static void main(String[] args) {
+//		String a = " \"Hello\" \"How\" \"are\" \"you?\" //asdfsfasadfasfas ";
+//		System.out.println(getNSL(a));
+		
+		String a = "assdaf 123 1.23)";
+		System.out.println(getNNV(a));
 	}
 }

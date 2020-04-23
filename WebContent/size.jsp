@@ -83,11 +83,20 @@
 					      Scanner myReader = new Scanner(myObj);
 					      while (myReader.hasNextLine()) {
 					        String data = myReader.nextLine();
+					        int NKW = Size.getNKW(data);
+					        int NID = Size.getNID(data);
+					        int NOP = Size.getNOP(data);
+					        int NNV = Size.getNNV(data);
+					        int NSL = Size.getNSL(data);
+					        int CS  = NKW+NID+NOP+NNV+NSL;
 					        out.print("<tr>");
 				        	out.print("<th scope="+row+">"+(++count)+"</th><td>"+data+"</td>"); // LINE			  
-					        out.print("<th scope="+row+">"+Size.getNKW(data)+"</th>"); // NKW
-					        out.print("<th scope="+row+">"+Size.getNID(data)+"</th>"); // NID
-					        out.print("<th scope="+row+">"+Size.getNOP(data)+"</th>"); // NOP
+					        out.print("<th scope="+row+">"+NKW+"</th>"); // NKW
+					        out.print("<th scope="+row+">"+NID+"</th>"); // NID
+					        out.print("<th scope="+row+">"+NOP+"</th>"); // NOP
+					        out.print("<th scope="+row+">"+NNV+"</th>"); // NNV
+					        out.print("<th scope="+row+">"+NSL+"</th>"); // NSL
+					        out.print("<th scope="+row+">"+CS+"</th>"); // CS
 					        out.print("</tr>");
 					        
 					      }
