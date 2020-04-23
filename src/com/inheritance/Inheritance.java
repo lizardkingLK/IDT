@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Stack;
 
 import com.strings.Keywords;
+import com.utility.CleanLine;
 
 public class Inheritance {
 	static int N = 0;
@@ -14,19 +15,6 @@ public class Inheritance {
 	static List<String> statements = new ArrayList<>();
 	static List<Integer> counts = new ArrayList<>();
 	static Stack<Character> stack = new Stack<>();
-	
-	public static String getCleanLine(String line) {
-		String cleanLine = line;
-		
-		if(line.contains("//")) {
-			if(cleanLine.contains("public class"))
-				cleanLine = cleanLine.replace("public class", "class");
-			String comment = cleanLine.substring(cleanLine.indexOf("/", 0) , cleanLine.length());
-			cleanLine = cleanLine.replace(comment, " ");
-		}
-		
-		return cleanLine;
-	}
 	
 	public static void addToClasses(String newLine) {
 		String[] words = newLine.split(" ");
@@ -65,9 +53,9 @@ public class Inheritance {
 	}
 	
 	public static int getDI(String line) {
-		
 		int count = 0;
-		String newLine = getCleanLine(line);
+		String newLineA = CleanLine.getCleanLine(line);
+		String newLine = CleanLine.getRidOfQuotes(newLineA);
 		boolean isOutside = isOutsideClass(newLine);
 		
 //		System.out.println(newLine);
@@ -91,33 +79,32 @@ public class Inheritance {
 			}
 		} else if(isOutside && newLine.trim().equals("")) {
 			return 0;
-		} else
-			return counts.get(counts.size()-1);
+		}
 		
 		counts.add(count);
 		System.out.println("Value of counts : "+counts);
 		return count;
 	}
 
-	public static void main(String[] args) {
-		int diA = getDI("public class A // this is some bs inside A");
-		System.out.println(diA);
-		
-		int diB = getDI("class B // this is some bs inside B");
-		System.out.println(diB);
-		
-		int diC = getDI("class C extends B // this is some bs inside C");
-		System.out.println(diC);
-		
-		int diD = getDI("dafdasfs // this is some bs inside C");
-		System.out.println(diD);
-		
-		int diE = getDI(" // this is some bs inside C");
-		System.out.println(diE);
-		
-		Iterator<String> list = classNames.iterator();
-		while(list.hasNext()) {
-			System.out.println("List has : "+list.next());
-		}
-	}
+//	public static void main(String[] args) {
+//		int diA = getDI("public class A // this is some bs inside A");
+//		System.out.println(diA);
+//		
+//		int diB = getDI("class B // this is some bs inside B");
+//		System.out.println(diB);
+//		
+//		int diC = getDI("class C extends B // this is some bs inside C");
+//		System.out.println(diC);
+//		
+//		int diD = getDI("dafdasfs // this is some bs inside C");
+//		System.out.println(diD);
+//		
+//		int diE = getDI(" // this is some bs inside C");
+//		System.out.println(diE);
+//		
+//		Iterator<String> list = classNames.iterator();
+//		while(list.hasNext()) {
+//			System.out.println("List has : "+list.next());
+//		}
+//	}
 }

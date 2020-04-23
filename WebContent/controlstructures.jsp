@@ -83,9 +83,14 @@
 					      while (myReader.hasNextLine()) {
 					        String data = myReader.nextLine();
 					        int WTCS = ControlStructure.getWTCS(data);
+					        int NC = ControlStructure.getNC(data);
+					        int CCSPS = ControlStructure.getCCSPS(data);
 					        out.print("<tr>");
 				        	out.print("<th scope="+row+">"+(++count)+"</th><td>"+data+"</td>"); // LINE
 				        	out.print("<th scope="+row+">"+WTCS+"</th>"); // WTCS
+				        	out.print("<th scope="+row+">"+NC+"</th>"); // NC
+				        	out.print("<th scope="+row+">"+CCSPS+"</th>"); // CCSPS
+				        	out.print("<th scope="+row+">"+(WTCS+CCSPS)+"</th>"); // CCS
 					        out.print("</tr>");
 					      }
 					      myReader.close();

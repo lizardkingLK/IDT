@@ -5,12 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.strings.Keywords;
+import com.utility.CleanLine;
 
 public class Size {
 	public static int getNKW(String line) {
 		int count = 0;
 		String[] kArr = Keywords.KEYWORDS;
-		String x = line.replaceAll("[()]", " ");
+		String newLineA = CleanLine.getCleanLineForKeywords(line);
+		String newLineB = CleanLine.getRidOfQuotes(newLineA);
+		String x = newLineB.replaceAll("[()]", " ");
 		
 		List<String> myArr = new ArrayList<>();
 		myArr.addAll(Arrays.asList(x.split(" ")));
@@ -32,7 +35,9 @@ public class Size {
 		
 		String regex = "\"(?:\\\\\"|[^\"])*?\"";
 		String replacement = "\"\"";
-		String x = line.replaceAll(regex, replacement).replaceAll("[()\\.]", " ");
+		String newLineA = CleanLine.getCleanLineForKeywords(line);
+		String newLineB = CleanLine.getRidOfQuotes(newLineA);
+		String x = newLineB.replaceAll(regex, replacement).replaceAll("[()\\.]", " ");
 		
 		List<String> myArr = new ArrayList<>();
 		myArr.addAll(Arrays.asList(x.trim().split(" ")));
@@ -67,7 +72,9 @@ public class Size {
 		String regN = "[a-zA-Z][+-][+-]";
 		
 		List<String> myArr = new ArrayList<>();
-		myArr.addAll(Arrays.asList(line.replaceAll("[\"]", " ").replaceAll("[a-zA-Z0-9*][;]", " ").trim().split(" ")));
+		String newLineA = CleanLine.getCleanLineForKeywords(line);
+		String newLineB = CleanLine.getRidOfQuotes(newLineA);
+		myArr.addAll(Arrays.asList(newLineB.replaceAll("[\"]", " ").replaceAll("[a-zA-Z0-9*][;]", " ").trim().split(" ")));
 		System.out.println(myArr);
 		for (String y : myArr) {
 			if( (!Arrays.asList(kArr).contains(y)) ) {

@@ -1,48 +1,20 @@
 package com.controlstructure;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
+
+import com.utility.CleanLine;
+
 public class ControlStructure {
-	public static String getCleanLine(String line) {
-		String cleanLine = line;
-		
-		if(line.contains("//")) {
-			if(cleanLine.contains("public class"))
-				cleanLine = cleanLine.replace("public class", "class");
-			String comment = cleanLine.substring(cleanLine.indexOf("/", 0) , cleanLine.length());
-			cleanLine = cleanLine.replace(comment, " ");
-		}
-		
-		return cleanLine;
-	}
-	
-	public static String getRidOfQuotes(String line) {
-		String newLine = line;
-		String newa = "";
-		
-		try {
-			int flag = 0;
-			for(int i=0;i<newLine.length();i++) {
-				
-				if((newLine.charAt(i)+"").matches("[\"]")) {
-					++flag;
-				}
-				
-				if(flag%2 == 0)
-					newa += newLine.charAt(i);
-			}
-		} catch(Exception e) {
-			System.out.println(e);
-			e.printStackTrace();
-		}
-		
-		String newestLine = newa.replaceAll("[\"]", "").trim();
-		
-		return newestLine;
-	}
+	static Stack<Character> stack = new Stack<>();
+	static boolean insideStructure = false;
 	
 	public static int getWTCS(String line) {
 		int count = 0;
-		String cleanLine = getCleanLine(line);
-		String newLine = getRidOfQuotes(cleanLine);
+		String newLineA = CleanLine.getCleanLine(line);
+		String newLine = CleanLine.getRidOfQuotes(newLineA);
 		
 //		System.out.println(newLine);
 		
@@ -58,7 +30,8 @@ public class ControlStructure {
 			count += 2;
 		}
 		if(newLine.contains(" switch ") ||
-			newLine.contains("switch(") || 
+			newLine.contains("switch ") ||
+			newLine.contains("switch(") ||
 			newLine.contains("}switch(") || 
 			newLine.contains("}switch (")) {
 			count += 2;
@@ -82,47 +55,198 @@ public class ControlStructure {
 		return count;
 	}
 	
-	public static void main(String[] args) {
-		int wtcsA = getWTCS("if( String a = \"if(\"; { // this is some bs inside A");
-		System.out.println(wtcsA);
+	public static int getNC(String line) {
+		int count = 0;
+		String newLineA = CleanLine.getCleanLine(line);
+		String newLine = CleanLine.getRidOfQuotes(newLineA);
+		boolean isControl = false;
 		
-		int wtcsB = getWTCS(" }if( { // this is some bs inside B");
-		System.out.println(wtcsB);
+		if(newLine.contains(" if ") ||
+			newLine.contains("if(") || 
+			newLine.contains("}if(") || 
+			newLine.contains("}if (") ||
+			
+			newLine.contains(" else if ") || 
+			newLine.contains("else if(") || 
+			newLine.contains("}else if(") || 
+			newLine.contains("else if (")) {
+			isControl = true;
+		}
+		if(newLine.contains(" for ") ||
+			newLine.contains("for(") || 
+			newLine.contains("}for(") || 
+			newLine.contains("}for (") || 
+
+			newLine.contains(" while ") ||
+			newLine.contains("while(") || 
+			newLine.contains("}while(") || 
+			newLine.contains("}while (")) {
+			isControl = true;
+		}
+		if(newLine.contains(" switch ") ||
+			newLine.contains("switch(") ||
+			newLine.contains("}switch(") || 
+			newLine.contains("}switch (")) {
+			isControl = true;
+		}
 		
-		int wtcsC = getWTCS("else if( { // this is some bs inside C");
-		System.out.println(wtcsC);
+		if(isControl || isOutsideConditions(newLine)) {
+			String regA = "[&|][&|]";
+			
+			List<String> myArr = new ArrayList<>();
+			myArr.addAll(Arrays.asList(newLine.replaceAll("[\"]", " ").replaceAll("[a-zA-Z0-9*][;]", " ").trim().split(" ")));
+			System.out.println(myArr);
+			for (String y : myArr) {
+				if(y.matches(regA)) {
+					System.out.println(y);
+					count++;
+				}
+			}
+			
+			count++;
+		}
 		
-		int wtcsD = getWTCS(" }else if( { // this is some bs inside D");
-		System.out.println(wtcsD);
-		
-		int wtcsE = getWTCS("while( { // this is some bs inside E");
-		System.out.println(wtcsE);
-		
-		int wtcsF = getWTCS(" }while( { // this is some bs inside F");
-		System.out.println(wtcsF);
-		
-		int wtcsG = getWTCS("for( { // this is some bs inside G");
-		System.out.println(wtcsG);
-		
-		int wtcsH = getWTCS(" }for( { // this is some bs inside H");
-		System.out.println(wtcsH);
-		
-		int wtcsI = getWTCS("switch( { // this is some bs inside I");
-		System.out.println(wtcsI);
-		
-		int wtcsJ = getWTCS(" }switch( { // this is some bs inside J");
-		System.out.println(wtcsJ);
-		
-		int wtcsK = getWTCS("switch( { // this is some bs inside K");
-		System.out.println(wtcsK);
-		
-		int wtcsL = getWTCS(" }switch( { // this is some bs inside L");
-		System.out.println(wtcsL);
-		
-		int wtcsM = getWTCS(" case // this is some bs inside M");
-		System.out.println(wtcsM);
-		
-		int wtcsN = getWTCS("case( // this is some bs inside N");
-		System.out.println(wtcsN);
+		return count;
 	}
+	
+	public static boolean isOutsideConditions(String l) {
+		String input = l; 
+		for (Character ch: input.toCharArray()) {
+//			System.out.println(ch);
+			if(ch == '(') {
+				stack.push(')');
+			}
+			else {
+				if(stack.isEmpty() || ch != stack.peek()) {
+					return false;
+				}
+				stack.pop();
+			}
+		}
+		
+		return stack.isEmpty();
+	}
+	
+	public static int getCCSPS(String line) {
+		int count = 0;
+		String newLineA = CleanLine.getCleanLine(line);
+		String newLine = CleanLine.getRidOfQuotes(newLineA);
+		
+		if(newLine.contains(" if ") ||
+			newLine.contains("if(") || 
+			newLine.contains("}if(") || 
+			newLine.contains("}if (") ||
+			
+			newLine.contains(" else if ") || 
+			newLine.contains("else if(") || 
+			newLine.contains("}else if(") || 
+			newLine.contains("else if (")) {
+			
+			if(isInsideStructure(newLine)) {
+				count = 0;
+			} else {
+				count = 2;
+			}
+		}
+		if(newLine.contains(" switch ") ||
+			newLine.contains("switch ") ||
+			newLine.contains("switch(") ||
+			newLine.contains("}switch(") || 
+			newLine.contains("}switch (")) {
+			
+			if(isInsideStructure(newLine)) {
+				count = 0;
+			} else {
+				count = 2;
+			}
+		}
+		if(newLine.contains(" case ") ||
+			newLine.contains("case")) {
+			if(isInsideStructure(newLine)) {
+				count = 0;
+			} else {
+				count = 1;
+			}
+		}
+		if(newLine.contains(" for ") ||
+			newLine.contains("for(") || 
+			newLine.contains("}for(") || 
+			newLine.contains("}for (") || 
+
+			newLine.contains(" while ") ||
+			newLine.contains("while(") || 
+			newLine.contains("}while(") || 
+			newLine.contains("}while (")) {
+			
+			if(isInsideStructure(newLine)) {
+				count = 0;
+			} else {
+				count = 3;
+			}
+		}
+		
+		return count;
+	}
+	
+	public static boolean isInsideStructure(String l) {
+		String input = l; 
+		for (Character ch: input.toCharArray()) {
+//			System.out.println(ch);
+			if(ch == '{') {
+				stack.push('}');
+			}
+			else {
+				if(stack.isEmpty() || ch != stack.peek()) {
+					return false;
+				}
+				stack.pop();
+			}
+		}
+		
+		return stack.isEmpty();
+	}
+	
+//	public static void main(String[] args) {
+//		int wtcsA = getWTCS("if( String a = \"if(\"; { // this is some bs inside A");
+//		System.out.println(wtcsA);
+//		
+//		int wtcsB = getWTCS(" }if( { // this is some bs inside B");
+//		System.out.println(wtcsB);
+//		
+//		int wtcsC = getWTCS("else if( { // this is some bs inside C");
+//		System.out.println(wtcsC);
+//		
+//		int wtcsD = getWTCS(" }else if( { // this is some bs inside D");
+//		System.out.println(wtcsD);
+//		
+//		int wtcsE = getWTCS("while( { // this is some bs inside E");
+//		System.out.println(wtcsE);
+//		
+//		int wtcsF = getWTCS(" }while( { // this is some bs inside F");
+//		System.out.println(wtcsF);
+//		
+//		int wtcsG = getWTCS("for( { // this is some bs inside G");
+//		System.out.println(wtcsG);
+//		
+//		int wtcsH = getWTCS(" }for( { // this is some bs inside H");
+//		System.out.println(wtcsH);
+//		
+//		int wtcsI = getWTCS("switch( { // this is some bs inside I");
+//		System.out.println(wtcsI);
+//		
+//		int wtcsJ = getWTCS(" }switch( { // this is some bs inside J");
+//		System.out.println(wtcsJ);
+//		
+//		int wtcsK = getWTCS("switch( { // this is some bs inside K");
+//		System.out.println(wtcsK);
+//		
+//		int wtcsL = getWTCS(" }switch( { // this is some bs inside L");
+//		System.out.println(wtcsL);
+//		
+//		int wtcsM = getWTCS(" case // this is some bs inside M");
+//		System.out.println(wtcsM);
+//		
+//		int wtcsN = getWTCS("case( // this is some bs inside N");
+//		System.out.println(wtcsN);
+//	}
 }
