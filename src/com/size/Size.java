@@ -5,9 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.strings.Keywords;
+import com.user.User;
 import com.utility.CleanLine;
 
 public class Size {
+	static User u = User.getInstance();
+	
 	public static int getNKW(String line) {
 		int count = 0;
 		String[] kArr = Keywords.KEYWORDS;
@@ -20,7 +23,7 @@ public class Size {
 		
 		for (String y : myArr) {
 			if(Arrays.asList(kArr).contains(y)) {
-				++count;
+				count += Integer.parseInt(u.getSizeKW());
 			}
 		}
 		
@@ -45,7 +48,7 @@ public class Size {
 		for (String y : myArr) {
 			if( (!Arrays.asList(kArr).contains(y)) && (y.matches(idReg) || y.matches(arrReg)) ) {
 //				System.out.println(y);
-				++count;
+				count += Integer.parseInt(u.getSizeID());
 			}
 		}
 		
@@ -94,7 +97,7 @@ public class Size {
 					y.matches(regN))  
 				{
 					System.out.println(y);
-					count++;
+					count += Integer.parseInt(u.getSizeOP());
 				}
 			}
 		}
@@ -114,7 +117,7 @@ public class Size {
 		for (String y : myArr) {
 			if(y.matches(regNumeric)) {
 				System.out.println(y);
-				count++;
+				count += Integer.parseInt(u.getSizeNV());
 			}
 		}
 		
@@ -129,7 +132,7 @@ public class Size {
 		
 		for(int i=0;i<newLine.length();i++) {
 			if((newLine.charAt(i)+"").matches("[\"]"))
-				++count;
+				count += Integer.parseInt(u.getSizeSL());
 		}
 		
 		return count/2;
@@ -139,7 +142,7 @@ public class Size {
 //		String a = " \"Hello\" \"How\" \"are\" \"you?\" //asdfsfasadfasfas ";
 //		System.out.println(getNSL(a));
 		
-		String a = "assdaf 123 1.23)";
-		System.out.println(getNNV(a));
+//		String a = "assdaf 123 1.23)";
+//		System.out.println(getNNV(a));
 	}
 }

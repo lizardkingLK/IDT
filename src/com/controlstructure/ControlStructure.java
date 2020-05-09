@@ -5,11 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+import com.user.User;
 import com.utility.CleanLine;
 
 public class ControlStructure {
 	static Stack<Character> stack = new Stack<>();
 	static boolean insideStructure = false;
+	static User u = User.getInstance();
 	
 	public static int getWTCS(String line) {
 		int count = 0;
@@ -27,18 +29,18 @@ public class ControlStructure {
 			newLine.contains("else if(") || 
 			newLine.contains("}else if(") || 
 			newLine.contains("else if (")) {
-			count += 2;
+			count += Integer.parseInt(u.getControlStructuresIF());
 		}
 		if(newLine.contains(" switch ") ||
 			newLine.contains("switch ") ||
 			newLine.contains("switch(") ||
 			newLine.contains("}switch(") || 
 			newLine.contains("}switch (")) {
-			count += 2;
+			count += Integer.parseInt(u.getControlStructuresSWI());
 		}
 		if(newLine.contains(" case ") ||
 			newLine.contains("case")) {
-			count += 1;
+			count += Integer.parseInt(u.getControlStructuresCASE());
 		}
 		if(newLine.contains(" for ") ||
 			newLine.contains("for(") || 
@@ -49,7 +51,7 @@ public class ControlStructure {
 			newLine.contains("while(") || 
 			newLine.contains("}while(") || 
 			newLine.contains("}while (")) {
-			count += 3;
+			count += Integer.parseInt(u.getControlStructuresLOOP());
 		}
 		
 		return count;
@@ -145,7 +147,7 @@ public class ControlStructure {
 			if(isInsideStructure(newLine)) {
 				count = 0;
 			} else {
-				count = 2;
+				count = Integer.parseInt(u.getControlStructuresIF());
 			}
 		}
 		if(newLine.contains(" switch ") ||
@@ -157,7 +159,7 @@ public class ControlStructure {
 			if(isInsideStructure(newLine)) {
 				count = 0;
 			} else {
-				count = 2;
+				count = Integer.parseInt(u.getControlStructuresSWI());
 			}
 		}
 		if(newLine.contains(" case ") ||
@@ -165,7 +167,7 @@ public class ControlStructure {
 			if(isInsideStructure(newLine)) {
 				count = 0;
 			} else {
-				count = 1;
+				count = Integer.parseInt(u.getControlStructuresCASE());
 			}
 		}
 		if(newLine.contains(" for ") ||
@@ -181,7 +183,7 @@ public class ControlStructure {
 			if(isInsideStructure(newLine)) {
 				count = 0;
 			} else {
-				count = 3;
+				count = Integer.parseInt(u.getControlStructuresLOOP());
 			}
 		}
 		

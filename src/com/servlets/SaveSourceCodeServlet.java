@@ -23,25 +23,22 @@ public class SaveSourceCodeServlet extends HttpServlet {
 	private int maxFileSize = 50 * 1024;
 	private int maxMemSize = 4 * 1024;
 	private File file ;
-	   
-	public void init( ){
-	    // Get the file location where it would be stored.
-		filePath = getServletContext().getInitParameter("file-upload"); 
-		user.setFilePath(filePath);
-	}
 	
 	private static final long serialVersionUID = 1L;
 
+	public void init() {
+		// Get the file location where it would be stored.
+    	filePath = getServletContext().getInitParameter("file-upload"); 
+    	user.setFilePath(filePath);
+	}
+	
     public SaveSourceCodeServlet() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
 		// Check that we have a file upload request
 	      isMultipart = ServletFileUpload.isMultipartContent(request);
 	      response.setContentType("text/html");
@@ -102,7 +99,8 @@ public class SaveSourceCodeServlet extends HttpServlet {
 	            	   user.setFileName(nameArr[nameArr.length-1]);
 	            	   file = new File( filePath + fileName.substring( fileName.lastIndexOf("\\"))) ;
 	                  user.setFileDir( new File(user.getFilePath(),user.getFileName()).toString() );
-	               } else {
+	               } 
+	               else {
 	                  file = new File( filePath + fileName.substring(fileName.lastIndexOf("\\")+1)) ;
 	               }
 	               fi.write( file ) ;
@@ -113,9 +111,9 @@ public class SaveSourceCodeServlet extends HttpServlet {
 	         out.println("</body>");
 	         out.println("</html>");
 	         request.getRequestDispatcher("welcome.jsp").forward(request, response);
-	         } catch(Exception ex) {
+	      } 
+	      catch(Exception ex) {
 	            System.out.println(ex);
-	         }
-		
-	    }
+	      }
+	}
 }

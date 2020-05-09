@@ -9,22 +9,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	
 	<link rel="stylesheet" href="./css/style.css">
-
-	<!-- DropZone -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/dropzone-amd-module.js" integrity="sha256-AMRpKEj1J26PHZHs6p+Ds+BEluRn7wz2FfArNF5a138=" crossorigin="anonymous"></script>
-	
-	<style>
-		input[type="file"] {
-			background-color: black;
-			display: inline-block;
-			opacity: 3;
-		}
-
-		input[type="file"]:focus,
-		input[type="file"]{
-			background-color: #f2f2f2;
-		}
-	</style>
 	
     <title>Home</title>
   </head>
@@ -60,7 +44,7 @@
 	
 		<div class="card" style="height: 80vh;">
 		  <div class="card-body">
-			<form action="saveSourceCode" class="dropzone inputfile" id="my-awesome-dropzone" method="POST" enctype="multipart/form-data">
+			<form action="SaveSourceCodeServlet" class="dropzone inputfile" id="my-awesome-dropzone" method="POST" enctype="multipart/form-data">
 				<small class="card-title" style="position: absolute; top: 20%; left: 45%;">Drop code here</small>
 				<input id="my-awesome-dropzone-file" type="file" name="sourcecode" class="btn btn-light" style="height: 30vh; width: 100%;" size="50" />
 			
@@ -76,28 +60,26 @@
 			  <div class="modal-dialog" role="document">
 				<div class="modal-content">
 				  <div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+					<h5 class="modal-title" id="staticBackdropLabel">Set Weights</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					  <span aria-hidden="true">&times;</span>
 					</button>
 				  </div>
 				  <div class="modal-body">
-					<table class="table">
+				  	<small>Size Factor</small>
+					<table class="table table-sm">
 					  <thead>
 						<tr>
-						  <th scope="col">#</th>
-						  <th scope="col">First</th>
-						  <th scope="col">Last</th>
-						  <th scope="col">Handle</th>
+						  <th scope="col">Program Component</th>
+						  <th scope="col">Weight</th>
 						</tr>
 					  </thead>
 					  <tbody>
 						<tr>
-						  <th scope="row">1</th>
-						  <td>Mark</td>
-						  <td>Otto</td>
+						  <td scope="row">Keyword</td>
 						  <td>
-							<select class="form-control form-control-sm">
+							<select class="form-control form-control-sm wSelect" id="sizeKW" data-toggle="sizeKW" title="Changes" data-content="changes saved">
+								<option>0</option>
 							  	<option selected>1</option>
 								<option>2</option>
 								<option>3</option>
@@ -105,11 +87,10 @@
 						  </td>
 						</tr>
 						<tr>
-						  <th scope="row">2</th>
-						  <td>Jacob</td>
-						  <td>Thornton</td>
+						  <td scope="row">Identifier</td>
 						  <td>
-							<select class="form-control form-control-sm">
+							<select class="form-control form-control-sm wSelect" id="sizeID" data-toggle="sizeID" title="Changes" data-content="changes saved">
+								<option>0</option>
 							  	<option selected>1</option>
 								<option>2</option>
 								<option>3</option>
@@ -117,104 +98,306 @@
 						  </td>
 						</tr>
 						<tr>
-						  <th scope="row">3</th>
-						  <td>Larry</td>
-						  <td>the Bird</td>
-						  <td>@twitter</td>
+						  <td scope="row">Operator</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="sizeOP" data-toggle="sizeOP" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">Numerical value</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="sizeNV" data-toggle="sizeNV" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">String literal</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="sizeSL" data-toggle="sizeSL" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
 						</tr>
 					  </tbody>
 					</table>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
-					</div>
 					
-					<table class="table">
+					<small>Variable Factor</small>
+					<table class="table table-sm">
 					  <thead>
 						<tr>
-						  <th scope="col">#</th>
-						  <th scope="col">First</th>
-						  <th scope="col">Last</th>
-						  <th scope="col">Handle</th>
+						  <th scope="col">Program Component</th>
+						  <th scope="col">Weight</th>
 						</tr>
 					  </thead>
 					  <tbody>
 						<tr>
-						  <th scope="row">1</th>
-						  <td>Mark</td>
-						  <td>Otto</td>
-						  <td>@mdo</td>
+						  <td scope="row">Global variable</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="variableGV" data-toggle="variableGV" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
 						</tr>
 						<tr>
-						  <th scope="row">2</th>
-						  <td>Jacob</td>
-						  <td>Thornton</td>
-						  <td>@fat</td>
+						  <td scope="row">Local variable</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="variableLV" data-toggle="variableLV" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
 						</tr>
 						<tr>
-						  <th scope="row">3</th>
-						  <td>Larry</td>
-						  <td>the Bird</td>
-						  <td>@twitter</td>
+						  <td scope="row">Primitive data type variable</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="variablePTV" data-toggle="variablePTV" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">Composite data type variable</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="variableCTV" data-toggle="variableCTV" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
 						</tr>
 					  </tbody>
 					</table>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
-					</div>
 					
-					<table class="table">
+					<small>Method Factor</small>
+					<table class="table table-sm">
 					  <thead>
 						<tr>
-						  <th scope="col">#</th>
-						  <th scope="col">First</th>
-						  <th scope="col">Last</th>
-						  <th scope="col">Handle</th>
+						  <th scope="col">Program Component</th>
+						  <th scope="col">Weight</th>
 						</tr>
 					  </thead>
 					  <tbody>
 						<tr>
-						  <th scope="row">1</th>
-						  <td>Mark</td>
-						  <td>Otto</td>
-						  <td>@mdo</td>
+						  <td scope="row">Method with a primitive return type</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="methodPRT" data-toggle="methodPRT" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
 						</tr>
 						<tr>
-						  <th scope="row">2</th>
-						  <td>Jacob</td>
-						  <td>Thornton</td>
-						  <td>@fat</td>
+						  <td scope="row">Method with a composite return type</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="methodCRT" data-toggle="methodCRT" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
 						</tr>
 						<tr>
-						  <th scope="row">3</th>
-						  <td>Larry</td>
-						  <td>the Bird</td>
-						  <td>@twitter</td>
+						  <td scope="row">Method with a void return type</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="methodVRT" data-toggle="methodVRT" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">Primitive data type parameter</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="methodPDTP" data-toggle="methodPDTP" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">Composite data type parameter</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="methodCDTP" data-toggle="methodCDTP" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
 						</tr>
 					  </tbody>
 					</table>
-				  </div>
+					
+					<small>Inheritance Factor</small>
+					<table class="table table-sm">
+					  <thead>
+						<tr>
+						  <th scope="col">Program Component</th>
+						  <th scope="col">Weight</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr>
+						  <td scope="row">Class with no inheritance</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="inheritanceNI" data-toggle="inheritanceNI" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">First level inheritance</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="inheritanceFLI" data-toggle="inheritanceFLI" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">Second level inheritance</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="inheritanceSLI" data-toggle="inheritanceSLI" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">Third level inheritance</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="inheritanceTLI" data-toggle="inheritanceTLI" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">Other level inheritance</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="inheritanceOLI" data-toggle="inheritanceOLI" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
+					
+					<small>Control Structures Factor</small>
+					<table class="table table-sm">
+					  <thead>
+						<tr>
+						  <th scope="col">Program Component</th>
+						  <th scope="col">Weight</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr>
+						  <td scope="row">'if' or 'else-if' condition</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="controlStructuresIF" data-toggle="controlStructuresIF" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">'for','while' or 'do-while' loop</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="controlStructuresLOOP" data-toggle="controlStructuresLOOP" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">'switch' of 'switch-case' control structure</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="controlStructuresSCH" data-toggle="controlStructuresSCH" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+						<tr>
+						  <td scope="row">'case' statement of 'switch-case' control structure</td>
+						  <td>
+							<select class="form-control form-control-sm wSelect" id="controlStructuresCASE" data-toggle="controlStructuresCASE" title="Changes" data-content="changes saved">
+								<option>0</option>
+							  	<option selected>1</option>
+								<option>2</option>
+								<option>3</option>
+							  </select>
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
+					
 				  <div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Understood</button>
+					<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">close</button>
+					<button type="button" class="btn btn-sm btn-success">OK</button>
 				  </div>
 				</div>
+			   </div>
 			  </div>
 			</div>			
 			<!-- WEIGHT MODALS (end) -->
 			
 			<div class="dropdown">
-			  <select class="custom-select" id="languageSelect" style="width: 15vw;" required>
-				<option selected value="0">Choose language</option>
-				<option value="1">JAVA</option>
-				<option value="2">C++</option>
+		  		<select class="custom-select" id="languageSelect" style="width: 15vw;" required>
+					<option selected value="0">Choose language</option>
+					<option value="1">JAVA</option>
+					<option value="2">C++</option>
 				</select>
-				
 			</div>
 			
-				<input type="submit" id="uploadCodeBtn" class="btn btn-sm btn-outline-dark mt-2" style="display:inline-block; width:15vw;" value="Upload" />
-		  
+			 <input type="submit" id="uploadCodeBtn" class="btn btn-sm btn-outline-dark mt-2" style="display:inline-block; width:15vw;" value="Upload" />
 		  	</form>
 		  </div>
 		</div>
@@ -222,11 +405,15 @@
 	
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  
+  	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/dropzone-amd-module.js" integrity="sha256-AMRpKEj1J26PHZHs6p+Ds+BEluRn7wz2FfArNF5a138=" crossorigin="anonymous"></script> -->
+  	
   	<!-- My script #1 -->
   	<script src="./js/checkUploadValidity.js"></script>
+  	
+  	<!-- My script #2 -->
+  	<script src="./js/setWeights.js"></script>
   </body>
 </html>

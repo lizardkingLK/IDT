@@ -4,6 +4,7 @@
 <%@ page import="java.io.FileNotFoundException" %>
 <%@ page import="java.util.Scanner" %>
 <%@ page import="com.user.*" %>
+<%@ page import="com.variable.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -82,8 +83,18 @@
 					      Scanner myReader = new Scanner(myObj);
 					      while (myReader.hasNextLine()) {
 					        String data = myReader.nextLine();
-					        out.print("<tr><th scope="+row+">"+(++count)+"</th><td>"+data+"</td></tr>");			  
-					        //out.print("<br />");
+					        int WVS = Variable.getWVS(data);
+					        int NPDTV = Variable.getNPDTV(data);
+					        int NCDTV = Variable.getNCDTV(data);
+					        int CV = 1;
+					        out.print("<tr>");
+					        out.print("<th scope="+row+">"+(++count)+"</th>");
+					        out.print("<td>"+data+"</td>");
+					        out.print("<td>"+WVS+"</td>");
+					        out.print("<td>"+NPDTV+"</td>");
+					        out.print("<td>"+NCDTV+"</td>");
+					        out.print("<td>"+CV+"</td>");
+					        out.print("</tr>");
 					      }
 					      myReader.close();
 				    } catch (FileNotFoundException e) {
