@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.io.File" %>
 <%@ page import="java.io.FileNotFoundException" %>
+<%@ page import="java.util.List" %>
 <%@ page import="java.util.Scanner" %>
 <%@ page import="com.user.*" %>
 <%@ page import="com.size.Size" %>
@@ -75,6 +76,7 @@
 				<% 
 					User user = User.getInstance();
 					String fileDir = user.getFileDir();
+					List<Integer> list = User.getCSList();
 					
 					try {
 						  String row = "row";
@@ -88,7 +90,13 @@
 					        int NOP = Size.getNOP(data);
 					        int NNV = Size.getNNV(data);
 					        int NSL = Size.getNSL(data);
-					        int CS  = NKW+NID+NOP+NNV+NSL;
+					        int WKW = Integer.parseInt(user.getSizeKW());
+					        int WID = Integer.parseInt(user.getSizeID());
+					        int WOP = Integer.parseInt(user.getSizeOP());
+					        int WNV = Integer.parseInt(user.getSizeNV());
+					        int WSL = Integer.parseInt(user.getSizeSL());
+					        int CS  = Size.getCS(WKW,NKW,WID,NID,WOP,NOP,WNV,NNV,WSL,NSL);
+					        list.add(CS);
 					        out.print("<tr>");
 				        	out.print("<th scope="+row+">"+(++count)+"</th><td>"+data+"</td>"); // LINE			  
 					        out.print("<th scope="+row+">"+NKW+"</th>"); // NKW

@@ -1,5 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="java.io.File" %>
+<%@ page import="java.io.FileNotFoundException" %>
+<%@ page import="java.util.Scanner" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.user.*" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -67,72 +72,67 @@
 			</tr>
 		  </thead>
 		  <tbody>
-			<tr>
-			  <th scope="row">1</th>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			</tr>
-			<tr>
-			  <th scope="row">2</th>
-			 <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			</tr>
-			<tr>
-			  <th scope="row">3</th>
-			 <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			</tr>
-			 <tr>
-			  <th scope="row">4</th>
-			 <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			</tr>
-			 <tr>
-			  <th scope="row">5</th>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			</tr>
-			 <tr>
-			  <th scope="row">6</th>
-			 <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			  <td></td>
-			</tr>
+			<% 
+					User user = User.getInstance();
+					String fileDir = user.getFileDir();
+					List<Integer> CCSList = User.getCCSList();
+					List<Integer> CIList = User.getCIList();
+					List<Integer> CSList = User.getCSList();
+					List<Integer> CVList = User.getCVList();
+					int totCCS = 0;
+					int totCI = 0;
+					int totCS = 0;
+					int totCV = 0;
+					int totTCPS = 0;
+					
+					try {
+						  String row = "row";
+						  int count = 0;
+					      File myObj = new File(fileDir);
+					      Scanner myReader = new Scanner(myObj);
+					      while (myReader.hasNextLine()) {
+					        String data = myReader.nextLine();
+					        int a = CSList.get(count);
+					        int b = CVList.get(count);
+					        int c = CIList.get(count);
+					        int d = CCSList.get(count);
+					        int tot = a + b + 0 + c + 0 + d;
+					        totCS += a;
+					        totCV += b;
+					        totCI += c;
+					        totCCS += d; 
+					        totTCPS += tot;
+					        out.print("<tr>");
+				        	out.print("<th scope="+row+">"+(++count)+"</th>"); // LINE NO
+		        			out.print("<td>"+data+"</td>"); // LINE
+		        			out.print("<td>"+a+"</td>");
+		        			out.print("<td>"+b+"</td>");
+		        			out.print("<td>"+0+"</td>");
+		        			out.print("<td>"+c+"</td>");
+		        			out.print("<td>"+0+"</td>");
+		        			out.print("<td>"+d+"</td>");
+		        			out.print("<td>"+tot+"</td>");
+		        			out.print("</tr>");
+					      }
+					}
+					catch (FileNotFoundException e) {
+						System.out.println("An error occurred.");
+						e.printStackTrace();
+					}
+			%>
+			<% 
+				out.print("<tr>");
+				out.print("<th scope=\"col\">---------</th>");
+				out.print("<th scope=\"col\">- Total -</th>");
+				out.print("<th scope=\"col\">"+totCS+"</th>");
+				out.print("<th scope=\"col\">"+totCV+"</th>");
+				out.print("<th scope=\"col\">"+0+"</th>");
+				out.print("<th scope=\"col\">"+totCI+"</th>");
+				out.print("<th scope=\"col\">"+0+"</th>");
+				out.print("<th scope=\"col\">"+totCCS+"</th>");
+				out.print("<th scope=\"col\">"+totTCPS+"</th>");
+				out.print("</tr>");
+			%>
 		  </tbody>
 		</table>
 	</div>

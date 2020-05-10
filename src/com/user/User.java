@@ -1,5 +1,8 @@
 package com.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 	private static User userInstanceSingleton;
 	private String filePath,fileName,fileDir;
@@ -8,6 +11,10 @@ public class User {
 			methodVRT = "1",methodPDTP = "1",methodCDTP = "1",inheritanceNI = "1",inheritanceFLI = "1",
 			inheritanceSLI = "1",inheritanceTLI = "1",inheritanceOLI = "1",controlStructuresIF = "1",
 			controlStructuresLOOP = "1",controlStructuresSWI = "1",controlStructuresCASE = "1";
+	private static List<Integer> CCSList = new ArrayList<>();
+	private static List<Integer> CIList = new ArrayList<>();
+	private static List<Integer> CSList = new ArrayList<>();
+	private static List<Integer> CVList = new ArrayList<>();
 	
 	private User() {}
 	
@@ -226,6 +233,38 @@ public class User {
 
 	public void setControlStructuresCASE(String controlStructuresCASE) {
 		this.controlStructuresCASE = controlStructuresCASE;
+	}
+
+	public static List<Integer> getCCSList() {
+		return CCSList;
+	}
+
+	public static void setCCSList(List<Integer> cCSList) {
+		CCSList = cCSList;
+	}
+
+	public static List<Integer> getCIList() {
+		return CIList;
+	}
+
+	public static void setCIList(List<Integer> cIList) {
+		CIList = cIList;
+	}
+
+	public static List<Integer> getCSList() {
+		return CSList;
+	}
+
+	public static void setCSList(List<Integer> cSList) {
+		CSList = cSList;
+	}
+
+	public static List<Integer> getCVList() {
+		return CVList;
+	}
+
+	public static void setCVList(List<Integer> cVList) {
+		CVList = cVList;
 	}
 
 	@Override

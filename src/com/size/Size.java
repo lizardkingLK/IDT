@@ -138,6 +138,11 @@ public class Size {
 		return count/2;
 	}
 	
+	public static int getCS(int a, int b, int c, int d, int e, int f, int g, int h, int i, int j) {
+		//Cs= (Wkw* Nkw)+ (Wid* Nid)+ (Wop* Nop)+ (Wnv* Nnv)+ (Wsl* Nsl)
+		return ( (a * b) + (c * d) + (e * f) + (g * h) + (i * j) );
+	}
+	
 	public static void main(String[] args) {
 //		String a = " \"Hello\" \"How\" \"are\" \"you?\" //asdfsfasadfasfas ";
 //		System.out.println(getNSL(a));

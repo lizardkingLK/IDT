@@ -208,6 +208,11 @@ public class ControlStructure {
 		return stack.isEmpty();
 	}
 	
+	public static int getCCS(int a, int b, int c) {
+		// Ccs= (Wtcs* NC) +Ccspps
+		return ( (a * b) + c );
+	}
+	
 //	public static void main(String[] args) {
 //		int wtcsA = getWTCS("if( String a = \"if(\"; { // this is some bs inside A");
 //		System.out.println(wtcsA);

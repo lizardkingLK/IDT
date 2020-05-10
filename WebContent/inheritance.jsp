@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.io.File" %>
 <%@ page import="java.io.FileNotFoundException" %>
+<%@ page import="java.util.List" %>
 <%@ page import="java.util.Scanner" %>
 <%@ page import="com.user.*" %>
 <%@ page import="com.inheritance.Inheritance" %>
@@ -73,6 +74,7 @@
 		  	<% 
 					User user = User.getInstance();
 					String fileDir = user.getFileDir();
+					List<Integer> list = User.getCIList();
 					// out.print(fileDir);
 					
 					try {
@@ -83,12 +85,16 @@
 					      while (myReader.hasNextLine()) {
 					        String data = myReader.nextLine();
 					        int DI = Inheritance.getDI(data);
-					        int II = 1;
+					        int II = 0;
+					        int TI = (DI + II);
+					        int CI = TI;
+					        list.add(CI);
 					        out.print("<tr>");
 				        	out.print("<th scope="+row+">"+(++count)+"</th><td>"+data+"</td>"); // LINE
 				        	out.print("<th scope="+row+">"+DI+"</th>"); // DI
 				        	out.print("<th scope="+row+">"+II+"</th>"); // II
-				        	out.print("<th scope="+row+">"+(DI+II)+"</th>"); // TI
+				        	out.print("<th scope="+row+">"+TI+"</th>"); // TI
+				        	out.print("<th scope="+row+">"+CI+"</th>"); // CI
 				        	out.print("</tr>");
 					      }
 					      myReader.close();

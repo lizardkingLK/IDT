@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.io.File" %>
 <%@ page import="java.io.FileNotFoundException" %>
+<%@ page import="java.util.List" %>
 <%@ page import="java.util.Scanner" %>
 <%@ page import="com.user.*" %>
 <%@ page import="com.variable.*" %>
@@ -74,6 +75,7 @@
 		  	<% 
 					User user = User.getInstance();
 					String fileDir = user.getFileDir();
+					List<Integer> list = User.getCVList();
 					// out.print(fileDir);
 					
 					try {
@@ -89,6 +91,7 @@
 					        int WPDTV = Integer.parseInt(user.getVariablePTV());
 					        int WCDTV = Integer.parseInt(user.getVariableCTV());
 					        int CV = Variable.getCV(WVS, WPDTV, NPDTV, WCDTV, NCDTV);
+					        list.add(CV);
 					        out.print("<tr>");
 					        out.print("<th scope="+row+">"+(++count)+"</th>");
 					        out.print("<td>"+data+"</td>");
