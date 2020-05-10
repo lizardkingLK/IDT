@@ -1,22 +1,56 @@
 package com.variable;
 
+import java.util.Arrays;
+
 import com.utility.CleanLine;
 
 public class Variable {
+	static String[] primitiveTypes = {"byte","short","int","long","float","double","boolean","char"};
 	static int oe = 0;
 	
 	public static int getWVS(String line) {
-		String newLine = CleanLine.getCleanLine(line);
-		System.out.println(newLine);
+		String newLine_1 = CleanLine.getCleanLine(line);
+		String newLine = newLine_1.replaceAll("[;]", "");
 		return getScope(newLine);
 	}
 	
 	public static int getNPDTV(String line) {
-		return 1;
+		String newLine_1 = CleanLine.getCleanLine(line);
+		String newLine = newLine_1.replaceAll("[;]", "");
+		String[] words = newLine.split(" ");
+		boolean isVariable = isVariable(newLine);
+		boolean isPrimitive = false;
+		
+		if(isVariable) {
+			for (String w : words)
+				if(Arrays.asList(primitiveTypes).contains(w))
+					isPrimitive = true;
+		}
+		
+		return (isVariable && isPrimitive) ? 1 : 0;
 	}
 
 	public static int getNCDTV(String line) {
-		return 1;
+		String newLine_0 = CleanLine.getCleanLine(line);
+		String newLine_1 = newLine_0.replaceAll("[{,;]", "");
+		String newLine = newLine_1.replaceAll("[},;]", "");
+		System.out.println(newLine);
+		String[] words = newLine.split(" ");
+		boolean isVariable = isVariable(newLine);
+		boolean isComposite = false;
+		
+		if(isVariable) {
+			for (String w : words)
+				if(w.contains("[]"))
+					isComposite = true;
+		}
+		
+		return isComposite ? 1 : 0;
+	}
+	
+	public static int getCV(int a, int b, int c, int d, int e) {
+		//Cv= Wvs[(Wpdtv* Npdtv) + (Wcdtv* Ncdtv)]
+		return a * ( (b * c) + (d * e) ); 
 	}
 	
 	public static int getScope(String line) {
@@ -46,9 +80,10 @@ public class Variable {
 		boolean valid = false;
 		
 		for (String s : sArr) {
-			System.out.println("WORD "+s);
-			if(s.matches("\\b[a-z][a-zA-Z0-9$_]*\\b") || s.matches("\\b[a-zA-Z0-9$_]*\\b[<][a-zA-Z0-9$_]*[>]"))
-				c++;
+			if(s.matches("\\b[a-z][a-zA-Z0-9$_]*\\b") || 
+				s.matches("\\b[a-zA-Z0-9$_]*\\b[<][a-zA-Z0-9$_]*[>]"))
+				if(!s.equals("for") && !s.contains("for("))
+					c++;
 			if(s.matches("[=]") || s.contains("=")) {
 				if(!s.contains("==")) {
 					c++;
@@ -56,6 +91,7 @@ public class Variable {
 				}
 			}
 		}
+		
 		System.out.println(c);
 		return valid && c >= 3;
 	}
@@ -75,11 +111,29 @@ public class Variable {
 	}
 	
 	public static void main(String[] args) {
-		getWVS("dasfsd = \"asdfsadfsa\"; //asdfsdafsdasds");
-		System.out.println(handleStack("{{{}"));
-		System.out.println(handleStack("}}}{"));
-		System.out.println(isVariable("int<sdf> a = \"1231sdadf\""));
-		System.out.println(isVariable("int a = \"1231sdadf\""));
-		System.out.println(isVariable("ArrayList<String> a = \"1231sdadf\""));
+//		getWVS("dasfsd = \"asdfsadfsa\"; //asdfsdafsdasds");
+//		System.out.println(handleStack("{{{}"));
+//		System.out.println(handleStack("}}}{"));
+//		System.out.println(isVariable("int<sdf> a = \"1231sdadf\""));
+//		System.out.println(isVariable("int a = \"1231sdadf\""));
+//		System.out.println(isVariable("ArrayList<String> a = \"1231sdadf\""));
+		
+//		String a = "public class Hello {\r\n" + 
+//				"	// asdfdasdfa\r\n" + 
+//				"}\r\n" + 
+//				"\r\n" + 
+//				"class A {\r\n" + 
+//				"	private int a = \"sdfas\";\r\n" + 
+//				"}\r\n" + 
+//				"\r\n" + 
+//				"class B {\r\n" + 
+//				"	public void A() {\r\n" + 
+//				"		int c = 2;\r\n" + 
+//				"	}\r\n" + 
+//				"}";
+//		
+//		System.out.println(isVariable(a));
+		String a = "String[] asd = {ad,sadf,asdf}; //saddsafd";
+		System.out.println(getNCDTV(a));
 	}
 }

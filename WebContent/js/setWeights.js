@@ -1,4 +1,6 @@
 $(document).on("change", ".wSelect", function(e) {
+	e.preventDefault();
+	
 	let id = e.target.id;
 	let val = e.target.value;
 	

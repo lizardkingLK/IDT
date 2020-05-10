@@ -21,6 +21,7 @@ public class SetWeightsServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		java.io.PrintWriter out = response.getWriter( );
 		Enumeration<String> parameterNames = request.getParameterNames();
 		 
         while (parameterNames.hasMoreElements()) {
@@ -110,6 +111,9 @@ public class SetWeightsServlet extends HttpServlet {
         }
 		
 		System.out.println(u.toString());
+		
+		out.println("Weights saved. <br>");
+        out.println("<a href=\"index.jsp\">GO</a>");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

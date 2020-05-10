@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
  
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import com.user.User;
 
 @WebServlet("/SaveSourceCodeServlet")
+@MultipartConfig
 public class SaveSourceCodeServlet extends HttpServlet {
 	private User user = User.getInstance();
 	
@@ -105,15 +107,19 @@ public class SaveSourceCodeServlet extends HttpServlet {
 	               }
 	               fi.write( file ) ;
 	               out.println("Uploaded Filename: " + fileName + "<br>");
+	               out.println("<a href=\"welcome.jsp\">GO</a>");
 	               System.out.println(fileName);
 	            }
 	         }
 	         out.println("</body>");
 	         out.println("</html>");
-	         request.getRequestDispatcher("welcome.jsp").forward(request, response);
+	         
+	         Thread.sleep(3000);
+	         
+	         //request.getRequestDispatcher("welcome.jsp").forward(request, response);
 	      } 
 	      catch(Exception ex) {
-	            System.out.println(ex);
+	    	  System.out.println(ex);
 	      }
 	}
 }

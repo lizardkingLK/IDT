@@ -86,7 +86,9 @@
 					        int WVS = Variable.getWVS(data);
 					        int NPDTV = Variable.getNPDTV(data);
 					        int NCDTV = Variable.getNCDTV(data);
-					        int CV = 1;
+					        int WPDTV = Integer.parseInt(user.getVariablePTV());
+					        int WCDTV = Integer.parseInt(user.getVariableCTV());
+					        int CV = Variable.getCV(WVS, WPDTV, NPDTV, WCDTV, NCDTV);
 					        out.print("<tr>");
 					        out.print("<th scope="+row+">"+(++count)+"</th>");
 					        out.print("<td>"+data+"</td>");

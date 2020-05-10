@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Stack;
 
 import com.strings.Keywords;
+import com.user.User;
 import com.utility.CleanLine;
 
 public class Inheritance {
+	static User u = User.getInstance();
 	static int N = 0;
 	static List<String> classNames = new ArrayList<>();
 	static List<String> statements = new ArrayList<>();
@@ -65,10 +67,10 @@ public class Inheritance {
 			if(newLine.contains(" extends ")) {
 				for (String cls : classNames) {
 					if(newLine.contains(" extends "+cls)) {
-						++count;
+						count += Integer.parseInt(u.getInheritanceFLI());
 						for(String st: statements) {
 							if(st.contains(cls+" extends ")) {
-								++count;
+								count += Integer.parseInt(u.getInheritanceSLI());
 							}
 						}
 					} 
